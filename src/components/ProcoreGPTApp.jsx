@@ -9,11 +9,10 @@ function ProcoreGPTApp({ projectId }) {
     setLoading(true);
     try {
       const res = await fetch('http://localhost:4000/gpt-query', {
-  method: 'POST',
-  headers: { 'Content-Type': 'application/json' },
-  body: JSON.stringify({ projectId, query }),
-});
-
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ projectId, query }),
+      });
       const data = await res.json();
       setResponse(data.answer);
     } catch (err) {
