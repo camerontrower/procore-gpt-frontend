@@ -5,21 +5,24 @@ function ProcoreGPTApp({ projectId }) {
   const [response, setResponse] = useState('');
   const [loading, setLoading] = useState(false);
 
-  const handleSubmit = async () => {
-    setLoading(true);
-    try {
-      const res = await fetch('http://localhost:4000/gpt-query', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ projectId, query }),
-      });
-      const data = await res.json();
-      setResponse(data.answer);
-    } catch (err) {
-      setResponse('Error: ' + err.message);
-    }
-    setLoading(false);
-  };
+const handleSubmit = async () => {
+  setLoading(true);
+  try {
+    const backendUrl = process.env.REACT_APP_BACKEND_URL || 'http://localhost:4000';
+    const res = await fetch(`${backendUrl}/gpt-query`, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ projectId, query }),
+    });
+    const data = await res.json();
+    setResponse(data.answer);
+  } catch (err) {
+    setResponse('Error: ' + err.message);
+  }
+  setLoading(false);
+};
+
+
 
   return (
     <div style={{ padding: 20 }}>
